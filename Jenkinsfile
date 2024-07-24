@@ -27,7 +27,7 @@ pipeline {
         stage('init'){
             steps{
                 sh """
-                    cd terrafom 
+                    cd terraform
                     terraform init -reconfigure
                 """
             }
@@ -36,7 +36,7 @@ pipeline {
             steps{
                 sh """
                     pwd
-                    cd terrafom 
+                    cd terraform 
                     terraform plan -var="app_version=${params.appVersion}"
                 """
             }
@@ -45,7 +45,7 @@ pipeline {
             steps{
                 sh """
                     pwd
-                    cd terrafom 
+                    cd terraform
                     terraform deploy -var="app_version=${params.appVersion}"
                 """
             }
