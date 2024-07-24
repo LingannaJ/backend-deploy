@@ -10,7 +10,7 @@ pipeline {
             ansiColor('xterm')
     }
     parameters{
-        string(name: 'appVersion', defaultValue: '1.0.0', description: 'what is the application Version')
+        string(name: 'appVersion', defaultValue: '1.0.0', description: 'what is the application Version?')
     }
     environment{
         def appVersion = '' // variable declaration
@@ -24,6 +24,33 @@ pipeline {
                 }
             }
         }
+        stage('init'){
+            steps{
+                sh """
+                    cd terrafom 
+                    terraform init -reconfigure
+                """
+            }
+        }
+        stage('plan'){
+            steps{
+                sh """
+                    pwd
+                    cd terrafom 
+                    terraform plan -var="app_version=${params.appVersion}"
+                """
+            }
+        }
+        stage('deploy'){
+            steps{
+                sh """
+                    pwd
+                    cd terrafom 
+                    terraform deploy -var="app_version=${params.appVersion}"
+                """
+            }
+        }
+    }
 
     post { 
         
