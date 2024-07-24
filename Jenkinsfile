@@ -46,7 +46,7 @@ pipeline {
                 sh """
                     pwd
                     cd terraform
-                    terraform deploy -var="app_version=${params.appVersion}"
+                    terraform apply -var="app_version=${params.appVersion}"
                 """
             }
         }
